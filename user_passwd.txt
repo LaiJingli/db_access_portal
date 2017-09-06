@@ -1,0 +1,2 @@
+zhangshan:7f86b9dfff0d495673906a6100fc3877:all_group
+lisi:0dd63d65fd0e08894e904b95d5991184:db1|db2|db3

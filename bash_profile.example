@@ -1,0 +1,29 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin
+
+export PATH
+
+
+
+##### db查询入口
+##子进程向父进程传递设置的变量login_timestamp:通过共享文件的方式
+export login_timestamp=`date +%s%N`
+##auth
+code_dir=/home/db_access_portal
+trap "echo '请不要强制ctrl+C!'" SIGINT 
+source $code_dir/db_access_portal_user_auth.sh
+release_user=`cat /tmp/$login_timestamp.user`
+#echo release_user:${release_user}
+#cmd=$code_dir/db_access_portal.sh
+cmd=$code_dir/db_access_portal.sh
+log_file=$code_dir/log/db_operation_${release_user}_`date +%Y%m%d%H%M%S`_$login_timestamp
+trap "echo '请不要强制ctrl+C!'" SIGINT
+exec /usr/bin/script -q -t -c "$cmd" 2>$log_file.date  -a  -f  $log_file.log

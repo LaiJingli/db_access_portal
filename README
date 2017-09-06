@@ -1,0 +1,27 @@
+db查询系统,供RD、QA、PM查询数据库入口
+支持：
+权限认证
+修改密码
+mysql
+mongodb
+
+
+为避免用户输入后端mysql的用户名密码，设置共享用户的mysql客户端配置文件
+# more /home/db_access_portal/.my.cnf
+[mysql]
+user=db_readonly
+password=xxx_db_readonly_pass
+
+
+为避免用户手工输入mongodb的rs.slaveOk,设置共享用户的mongodb客户端配置文件
+# more /home/db_access_portal/.mongorc.js
+rs.slaveOk();
+
+var cmdCountNum = 0;
+var prompt = function () {
+var host = db.getMongo().host;
+var database = db.getName();
+cmdCountNum++;
+return host + ':' + database + ' (' + cmdCountNum + ')> ';
+}
+
